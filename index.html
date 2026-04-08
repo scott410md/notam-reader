@@ -14,6 +14,7 @@
     --t2-bg:#2d2008;--t2-col:#e3b341;--t2-border:#d29922;
     --t3-bg:#0d1f33;--t3-col:#58a6ff;--t3-border:#1f6feb;
     --id-bg:#1e1b3a;--id-col:#d2a8ff;--id-border:#8957e5;
+    --jepp-bg:#0d2a14;--jepp-col:#3fb950;
     --radius:6px;--mono:'Courier New',Courier,monospace;
   }
   @media(prefers-color-scheme:light){
@@ -25,58 +26,34 @@
       --t2-bg:#fff8c5;--t2-col:#7d4e00;--t2-border:#bf8700;
       --t3-bg:#ddf4ff;--t3-col:#0550ae;--t3-border:#54aeff;
       --id-bg:#fbefff;--id-col:#5a32a3;--id-border:#8250df;
+      --jepp-bg:#dafbe1;--jepp-col:#1a7f37;
     }
   }
   html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif}
   body{padding:0 0 40px}
 
   .header{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;position:sticky;top:0;z-index:100}
-  .header-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .header-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
   .logo{font-family:var(--mono);font-size:16px;font-weight:700;color:var(--text);letter-spacing:-.5px}
   .logo span{color:var(--t1-col)}
-  .notam-count{font-size:11px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:2px 8px;color:var(--text2)}
-  .toggle-btn{
-    margin-left:auto;font-size:12px;font-weight:600;height:30px;padding:0 12px;
-    border-radius:var(--radius);border:1px solid var(--border2);
-    background:var(--bg3);color:var(--text);cursor:pointer;white-space:nowrap;
-    -webkit-appearance:none;
-  }
+  .notam-count{font-size:11px;background:var(--bg3);border:1px solid var(--border);border-radius:99px;padding:2px 8px;color:var(--text2);white-space:nowrap}
+  .toggle-btn{margin-left:auto;font-size:12px;font-weight:600;height:30px;padding:0 12px;border-radius:var(--radius);border:1px solid var(--border2);background:var(--bg3);color:var(--text);cursor:pointer;white-space:nowrap;-webkit-appearance:none}
+
   .toolbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
-  .toolbar input,.toolbar select{
-    font-size:13px;padding:5px 8px;border-radius:var(--radius);
-    border:1px solid var(--border);background:var(--bg3);color:var(--text);height:30px;outline:none;
-    -webkit-appearance:none;
-  }
-  .toolbar input{flex:1;min-width:140px}
-  .cat-row{display:flex;flex-wrap:wrap;gap:5px}
-  .cat-btn{
-    font-size:11px;font-weight:600;padding:2px 9px;border-radius:99px;
-    border:1px solid transparent;cursor:pointer;transition:opacity .15s;
-    -webkit-appearance:none;
-  }
+  .toolbar input,.toolbar select{font-size:13px;padding:5px 8px;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg3);color:var(--text);height:30px;outline:none;-webkit-appearance:none}
+  .toolbar input{flex:1;min-width:120px}
+
+  .filter-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:0}
+  .cat-btn{font-size:11px;font-weight:600;padding:2px 9px;border-radius:99px;border:1px solid transparent;cursor:pointer;transition:opacity .15s;-webkit-appearance:none}
   .cat-btn.off{opacity:.25}
 
-  /* Inline paste panel — no popup, no modal, no prompt() */
   .paste-panel{background:var(--bg2);border-bottom:2px solid var(--t1-border);padding:14px 16px}
-  .paste-panel-title{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px}
   .paste-panel p{font-size:12px;color:var(--text3);margin-bottom:10px;line-height:1.6}
-  .paste-panel textarea{
-    width:100%;height:150px;font-family:var(--mono);font-size:12px;
-    background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);
-    color:var(--text);padding:10px;resize:vertical;outline:none;line-height:1.6;
-    -webkit-appearance:none;display:block;
-  }
+  .paste-panel textarea{width:100%;height:150px;font-family:var(--mono);font-size:12px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);padding:10px;resize:vertical;outline:none;line-height:1.6;-webkit-appearance:none;display:block}
   .paste-panel textarea:focus{border-color:var(--t1-col)}
   .paste-actions{display:flex;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap}
-  .btn-load{
-    font-size:13px;font-weight:700;padding:8px 20px;border-radius:var(--radius);
-    border:none;background:var(--t1-col);color:#fff;cursor:pointer;-webkit-appearance:none;
-  }
-  .btn-clear{
-    font-size:12px;padding:8px 12px;border-radius:var(--radius);
-    border:1px solid var(--border);background:transparent;color:var(--text2);
-    cursor:pointer;-webkit-appearance:none;
-  }
+  .btn-load{font-size:13px;font-weight:700;padding:8px 20px;border-radius:var(--radius);border:none;background:var(--t1-col);color:#fff;cursor:pointer;-webkit-appearance:none}
+  .btn-secondary{font-size:12px;padding:8px 12px;border-radius:var(--radius);border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;-webkit-appearance:none}
   .paste-hint{font-size:11px;color:var(--text2)}
   .hidden{display:none!important}
 
@@ -84,25 +61,28 @@
   .stats-bar{padding:6px 16px;font-size:11px;color:var(--text3);border-bottom:1px solid var(--border);background:var(--bg2)}
   .content{padding:12px 16px}
 
-  .airport-group{margin-bottom:20px}
-  .airport-hdr{
-    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;
-    color:var(--text2);padding:5px 10px;background:var(--bg2);
-    border:1px solid var(--border);border-radius:var(--radius);
-    margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;
-  }
-  .ap-code{color:var(--text);font-size:13px}
-  .ap-count{font-size:10px;color:var(--text3);font-weight:400;letter-spacing:0}
+  /* Section dividers for airport groups */
+  .section-hdr{font-size:11px;font-weight:700;letter-spacing:.12em;color:var(--text3);text-transform:uppercase;padding:16px 0 6px;border-top:1px solid var(--border);margin-top:8px}
+  .section-hdr:first-child{border-top:none;padding-top:4px}
+
+  .airport-group{margin-bottom:16px}
+  .airport-hdr{font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--text2);padding:5px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+  .ap-code{color:var(--text);font-size:14px}
+  .ap-count{font-size:10px;color:var(--text3);font-weight:400}
 
   .notam-row{display:flex;margin-bottom:5px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);background:var(--bg2)}
   .notam-row:hover{border-color:var(--border2)}
+  .notam-row.jepp-flagged{border-color:var(--t1-border)}
   .sev-bar{width:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
   .sev-label{color:rgba(255,255,255,.85);font-size:9px;font-weight:800;writing-mode:vertical-rl;letter-spacing:2px;text-transform:uppercase}
   .notam-inner{padding:7px 11px;flex:1;min-width:0}
   .notam-meta{font-size:10px;color:var(--text3);margin-bottom:5px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   .notam-id{font-family:var(--mono);font-weight:700;color:var(--text2);font-size:11px}
+  .notam-date{font-family:var(--mono);font-size:10px;color:var(--text3)}
   .cat-badge{font-size:10px;padding:1px 7px;border-radius:99px;font-weight:600}
-  .period{font-family:var(--mono);font-size:10px;color:var(--text3)}
+  .jepp-star{font-size:10px;padding:1px 6px;border-radius:99px;font-weight:700;background:var(--t1-bg);color:var(--t1-col);border:1px solid var(--t1-border)40}
+  .company-badge{font-size:10px;padding:1px 6px;border-radius:99px;font-weight:600;background:var(--jepp-bg);color:var(--jepp-col)}
+
   .notam-text{font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--text);word-break:break-word;white-space:pre-wrap}
   .raw-tag{font-size:9px;color:var(--text3);margin-top:4px;font-style:italic}
 
@@ -128,23 +108,27 @@
     <input type="text" id="search" placeholder="Search NOTAMs..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
     <select id="sort">
       <option value="sev">Sort: severity</option>
+      <option value="jepp">Sort: Jepp flagged first</option>
       <option value="date">Sort: date</option>
-      <option value="airport">Sort: airport</option>
       <option value="cat">Sort: category</option>
     </select>
     <select id="airport-filter"><option value="">All airports</option></select>
+    <select id="section-filter">
+      <option value="">All sections</option>
+      <option value="AERODROME">Aerodrome</option>
+      <option value="ENROUTE">Enroute</option>
+      <option value="COMPANY">Company</option>
+    </select>
   </div>
-  <div class="cat-row" id="cat-btns"></div>
+  <div class="filter-row" id="cat-btns"></div>
 </div>
 
-<!-- Inline paste panel — no modal, no prompt(), no popup of any kind -->
 <div class="paste-panel hidden" id="paste-panel">
-  <div class="paste-panel-title">Paste NOTAM text</div>
-  <p>Tap the box below, then tap and hold to Paste. Works with Jepp FD Pro, FAA NOTAM search, ForeFlight, or text copied from a PDF.</p>
-  <textarea id="paste-area" placeholder="Paste NOTAM text here..." spellcheck="false" autocorrect="off" autocapitalize="off"></textarea>
+  <p>Paste your Jepp FD Pro NOTAM package below. The full text of each NOTAM is preserved unmodified — headers, company info, and enroute sections are parsed and categorized separately.</p>
+  <textarea id="paste-area" placeholder="Paste Jepp FD Pro NOTAM text here..." spellcheck="false" autocorrect="off" autocapitalize="off"></textarea>
   <div class="paste-actions">
     <button class="btn-load" onclick="loadNotams()">Load NOTAMs</button>
-    <button class="btn-clear" onclick="clearPaste()">Clear</button>
+    <button class="btn-secondary" onclick="clearPaste()">Clear</button>
     <span class="paste-hint" id="paste-hint"></span>
   </div>
 </div>
@@ -155,11 +139,12 @@
   <span><mark class="t2" style="font-size:10px">ILS / LOC / NAV U/S</mark> component out</span>
   <span><mark class="t3" style="font-size:10px">PAPI / ATIS / lighting</mark> advisory</span>
   <span><mark class="id" style="font-size:10px">KLAX / RWY 24R</mark> identifier</span>
+  <span><span class="jepp-star" style="font-size:10px">★ Jepp flagged</span></span>
 </div>
 
 <div class="stats-bar" id="stats">Tap + Load NOTAMs to begin.</div>
 <div class="content" id="output">
-  <div class="empty">Tap <strong>+ Load NOTAMs</strong> above<br>paste your text into the box<br>then tap <strong>Load NOTAMs</strong></div>
+  <div class="empty">Tap <strong>+ Load NOTAMs</strong> above<br>paste your Jepp FD Pro NOTAM text<br>then tap <strong>Load NOTAMs</strong></div>
 </div>
 
 <script>
@@ -171,33 +156,61 @@ const CATS={
   OBST:    {label:'Obstacle', col:'#3fb950',bg:'#0d2a14',lcol:'#1a7f37',lbg:'#dafbe1',sev:3},
   AIRSPACE:{label:'Airspace', col:'#d2a8ff',bg:'#1e1b3a',lcol:'#5a32a3',lbg:'#fbefff',sev:2},
   PROC:    {label:'Procedure',col:'#ff7b72',bg:'#2d1520',lcol:'#a40e26',lbg:'#ffebe9',sev:2},
+  COMPANY: {label:'Company',  col:'#3fb950',bg:'#0d2a14',lcol:'#1a7f37',lbg:'#dafbe1',sev:6},
   MISC:    {label:'Misc',     col:'#8b949e',bg:'#21262d',lcol:'#6e7781',lbg:'#f6f8fa',sev:5},
 };
+
 const CAT_RULES=[
-  {re:/\b(ILS|LDA|SDF|LOC\b|LOCALIZER|GLIDE\s*SLOPE|GS\b|MINIMUMS|MINIMA|MDA\b|DA\b|DH\b|CAT\s*II|CAT\s*III|APCH|APPROACH|RNAV|RNP|VNAV|LNAV|LPVIAP)/i,cat:'ILS'},
-  {re:/\b(RWY|RUNWAY|CLSD|THRESHOLD|STOPWAY|ARRESTING|OVERRUN|PAVEMENT|PCN|GROOV|TOUCHDOWN|LAHSO)/i,cat:'RWY'},
+  {re:/\b(ILS|LDA|SDF|LOC\b|LOCALIZER|GLIDE\s*SLOPE|GS\b|MINIMUMS|MINIMA|MDA\b|DA\b|DH\b|CAT\s*II|CAT\s*III|APCH|APPROACH|RNAV|RNP|VNAV|LNAV|LPVIAP|LPV\b|IAP\b|GLS\b|TACAN\s*RWY|ILS\s*OR\s*LOC|LOC\s*Y|LOC\s*Z)/i,cat:'ILS'},
+  {re:/\b(RWY|RUNWAY|CLSD|THRESHOLD|STOPWAY|ARRESTING|OVERRUN|PAVEMENT|PCN|GROOV|TOUCHDOWN|LAHSO|RVR\b|RVRT|RVRM|RVRR|DECLARED\s*DIST)/i,cat:'RWY'},
   {re:/\b(TWY|TAXIWAY|APRON|DEICE\s*PAD)/i,cat:'TWY'},
-  {re:/\b(VOR|NDB|DME|TACAN|GPS\b|WAAS|NAVAID|COM\b|ATIS|ASOS|AWOS|ALTIMETER)/i,cat:'NAV'},
-  {re:/\b(OBST|CRANE|TOWER\b|WIND\s*TURBINE|STACK|ANTENNA|PAPI|VASI|REIL|TDZ|ALS\b|ODAL|MALSR|ALSF)/i,cat:'OBST'},
-  {re:/\b(TFR|AIRSPACE|CLASS\s*[ABCDE]|PROHIBITED|RESTRICTED|MOA\b|SUA\b|SFRA|UAS|DRONE|ALTRV)/i,cat:'AIRSPACE'},
-  {re:/\b(PROC\b|SID\b|STAR\b|ODP\b|AMDT|FDC\b|CHART)/i,cat:'PROC'},
+  {re:/\b(VOR|NDB|DME|TACAN|GPS\b|WAAS|GBAS|NAVAID|COM\b|ATIS|ASOS|AWOS|ALTIMETER|ADS-B|RAIM)/i,cat:'NAV'},
+  {re:/\b(OBST|CRANE|TOWER\b|WIND\s*TURBINE|STACK|ANTENNA|PAPI|VASI|REIL|TDZ|ALS\b|ODAL|MALSR|ALSF|LGT\b|LGTD|STATUS\s*LGT|RWY\s*END\s*ID)/i,cat:'OBST'},
+  {re:/\b(TFR|AIRSPACE|CLASS\s*[ABCDE]|PROHIBITED|RESTRICTED|MOA\b|SUA\b|SFRA|UAS|DRONE|ALTRV|STNR\s*ALT|LASER|ADS-B.*AVBL)/i,cat:'AIRSPACE'},
+  {re:/\b(SID\b|STAR\b|ODP\b|AMDT|FDC\b|CHART|IAP\b|DEPARTURE\s*PROC|ARR\b|DEP\b)/i,cat:'PROC'},
 ];
+
 const T1=['PROC NA','PROC NOT AUTH','NOT AUTHORIZED','N/A','CLSD','RWY CLSD','RUNWAY CLSD',
   'MINIMUMS','MINIMA','MDA','DA ','DH ','CAT III','CAT II','CAT I','LAHSO','TFR',
   'PROHIBITED','RESTRICTED','LNAV MINIMA NA','LNAV NA','APCH NA','APCH NOT AUTH',
-  'IFR NA','IFR NOT AUTH','UNSERVICEABLE'];
-const T2=['ILS','LOC','LOCALIZER','GLIDE SLOPE','GS ','LDA','VOR','NDB','DME','TACAN',
-  'RNAV','RNP','VNAV','LNAV','WAAS','GPS','U/S','OUT OF SERVICE','UNAVBL','UNMONITORED'];
+  'IFR NA','IFR NOT AUTH','UNSERVICEABLE','PROCEDURE NA','PROCEDURE NOT'];
+const T2=['ILS','LOC','LOCALIZER','GLIDE SLOPE','GS ','LDA','GLS','LPV',
+  'VOR','NDB','DME','TACAN','RNAV','RNP','VNAV','LNAV','WAAS','GPS','GBAS',
+  'U/S','OUT OF SERVICE','UNAVBL','UNMONITORED','UNUSABLE','OTS','OOS'];
 const T3=['PAPI','VASI','REIL','ALSF','MALSR','ODAL','RAIL','TDZ LGT','CL LGT','EDGEL',
-  'ATIS','ASOS','AWOS','TWY','TAXIWAY','APRON','PCN','GROOV','PAVEMENT',
-  'CRANE','TOWER','OBST','WIND TURBINE','ANTENNA'];
+  'STATUS LGT','RWY END ID LGT','ALS','ATIS','ASOS','AWOS','TWY','TAXIWAY','APRON',
+  'PCN','GROOV','PAVEMENT','RVR','RVRT','RVRM','RVRR',
+  'CRANE','TOWER','OBST','WIND TURBINE','ANTENNA','LGTD','NOT STD'];
 const ID_PATS=[
-  /\b(K[A-Z]{3}|P[A-Z]{3}|[A-Z]{4})\b/g,
+  /\b(K[A-Z]{3}|P[A-Z]{3})\b/g,
   /\bRWY\s+\d{1,2}[LRC]?(\/\d{1,2}[LRC]?)?\b/gi,
-  /\b(ILS|RNAV|VOR|NDB|LDA|LOC)\s+(RWY\s+)?\d{1,2}[LRC]?\b/gi,
+  /\b(ILS|RNAV|VOR|NDB|LDA|LOC|GLS|TACAN)\s+(OR\s+LOC\s+)?(RWY\s+)?\d{1,2}[LRC]?\b/gi,
 ];
 
+// Sections in the Jepp package we want to SKIP entirely (non-NOTAM boilerplate)
+const SKIP_SECTION_RE=/^(GENERAL INFORMATION|AEROPLANE INFORMATION|FLIGHT INFORMATION|FLIGHT LEG INFORMATION|LOAD-INFO|SPECIAL INFO ITEMS|Y-ROUTE RAIM PREDICTION|GPS INTERFERENCE|white sands|Desert MOA|W-283|W-285|Restricted Area|KSFO-SFO WIDE|EO procedure|CDRs)/i;
+
+// Airport section header pattern: "KIAH / IAH" or "KSFO / SFO"
+const AP_HDR=/^([A-Z]{4})\s*\/\s*([A-Z]{3,4})\s*$/;
+
+// Enroute center header: "KZHU / HOUSTON" etc
+const CTR_HDR=/^(KZ[A-Z]{2})\s*\/\s*\S.*$/;
+
+// NOTAM ID line patterns:
+// Jepp aerodrome: *KIAHA1704/26 (08APR26) or KIAHA1704/26 (08APR26)
+// Company NOTAM: UAL03040/25 (08APR26) or UAL00207/26 (20JAN26)
+// Enroute: KZHUA0721/26 (08APR26) or *KZHUA0670/26 ...
+const NOTAM_ID_LINE=/^(\*?)([A-Z]{2,5}\d{3,5}\/\d{2})\s+\((\d{2}[A-Z]{3}\d{2})\)\s*$/;
+
+function normalize(raw){
+  return raw
+    .replace(/[\u2018\u2019]/g,"'").replace(/[\u201C\u201D]/g,'"')
+    .replace(/[\u2013\u2014]/g,'-').replace(/\u00AD/g,'').replace(/\u00A0/g,' ')
+    .replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+}
+
 function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
 function highlight(raw){
   let t=escHtml(raw);
   const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
@@ -210,65 +223,130 @@ function highlight(raw){
   ID_PATS.forEach(p=>{t=t.replace(p,m=>`<mark class="id">${m}</mark>`)});
   return t;
 }
-function classify(t){for(const r of CAT_RULES)if(r.re.test(t))return r.cat;return 'MISC'}
-function severity(cat,t){const b=CATS[cat].sev;return/PROC\s*NA|NOT\s*AUTH|CLSD|N\/A/i.test(t)?Math.max(1,b-1):b}
 
-function parseNotams(raw){
-  // Normalize encoding artifacts from PDF copy-paste
-  let text=raw
-    .replace(/[\u2018\u2019]/g,"'").replace(/[\u201C\u201D]/g,'"')
-    .replace(/[\u2013\u2014]/g,'-').replace(/\u00AD/g,'').replace(/\u00A0/g,' ')
-    .replace(/\r\n/g,'\n').replace(/\r/g,'\n');
-
-  // Strategy 1: blank-line separated blocks
-  const byBlank=text.trim().split(/\n\s*\n/);
-  if(byBlank.length>1)return byBlank.map(b=>b.trim()).filter(Boolean).map(buildNotam);
-
-  // NOTAM header pattern: optional !, airport code, space, number/number
-  const HDR=/^[!]?\s*[A-Z]{2,5}\s+\d{1,2}\/\d{3,5}/;
-  const lines=text.split('\n');
-  const nonEmpty=lines.filter(l=>l.trim());
-
-  // Strategy 2: most lines are self-contained single-line NOTAMs
-  const hdrCount=nonEmpty.filter(l=>HDR.test(l.trim())).length;
-  if(nonEmpty.length>0 && hdrCount/nonEmpty.length>=0.6){
-    return nonEmpty.map(l=>l.trim()).map(buildNotam);
-  }
-
-  // Strategy 3: PDF-wrapped — reassemble continuation lines
-  const blocks=[];
-  let cur=[];
-  for(const line of lines){
-    const t=line.trim();
-    if(!t)continue;
-    if(HDR.test(t)&&cur.length>0){blocks.push(cur.join(' '));cur=[t];}
-    else{
-      // Rejoin lines broken mid-word with a hyphen
-      if(cur.length>0&&cur[cur.length-1].endsWith('-'))
-        cur[cur.length-1]=cur[cur.length-1].slice(0,-1)+t;
-      else cur.push(t);
-    }
-  }
-  if(cur.length>0)blocks.push(cur.join(' '));
-  if(blocks.length>0)return blocks.filter(Boolean).map(buildNotam);
-
-  // Fallback: one NOTAM per line
-  return nonEmpty.map(l=>l.trim()).map(buildNotam);
+function classify(t){
+  for(const r of CAT_RULES) if(r.re.test(t)) return r.cat;
+  return 'MISC';
+}
+function severity(cat,t,jeppStar){
+  if(jeppStar) return 1;
+  const base=CATS[cat].sev;
+  if(/PROC\s*NA|NOT\s*AUTH|CLSD|N\/A/i.test(t)) return Math.max(1,base-1);
+  return base;
 }
 
-function buildNotam(block){
-  const one=block.replace(/\s+/g,' ').trim();
-  const ap=(one.match(/\b([A-Z]{3,4})\b/)||[])[1]||'???';
-  const id=(one.match(/\b(\d{1,2}\/\d{3,5})\b/)||[])[1]||'';
-  const pm=one.match(/(\d{10})\s*[-–]\s*(\d{10})/);
-  const cat=classify(one);
-  return{airport:ap,id,period:pm?pm[1]+'-'+pm[2]:'',cat,sev:severity(cat,one),full:block,oneline:one};
+function parseNotams(raw){
+  const text=normalize(raw);
+  const lines=text.split('\n');
+  const notams=[];
+
+  let currentAirport='???';
+  let currentSection='AERODROME'; // AERODROME | ENROUTE | COMPANY
+  let skipSection=false;
+  let i=0;
+
+  while(i<lines.length){
+    const line=lines[i].trimEnd();
+    const trimmed=line.trim();
+
+    // Detect section we should skip
+    if(SKIP_SECTION_RE.test(trimmed)){
+      skipSection=true;
+      i++;
+      continue;
+    }
+
+    // Detect airport header "KIAH / IAH"
+    const apMatch=trimmed.match(AP_HDR);
+    if(apMatch){
+      currentAirport=apMatch[1]; // use ICAO (KIAH)
+      currentSection='AERODROME';
+      skipSection=false;
+      i++;
+      continue;
+    }
+
+    // Detect enroute center header "KZHU / HOUSTON00:25 - 11"
+    const ctrMatch=trimmed.match(/^(KZ[A-Z]{2})\s*\/\s*/);
+    if(ctrMatch){
+      currentAirport=ctrMatch[1];
+      currentSection='ENROUTE';
+      skipSection=false;
+      i++;
+      continue;
+    }
+
+    // Detect section labels that reset airport context
+    if(/^AERODROME INFORMATION\s*$/i.test(trimmed)){currentSection='AERODROME';skipSection=false;i++;continue}
+    if(/^ENROUTE INFORMATION\s*$/i.test(trimmed)){currentSection='ENROUTE';skipSection=false;i++;continue}
+
+    // Skip blank lines, "N I L", numeric-only lines, known boilerplate
+    if(!trimmed||trimmed==='N I L'||/^\d+$/.test(trimmed)){i++;continue}
+
+    // Skip if in a boilerplate section
+    if(skipSection){i++;continue}
+
+    // Try to match a NOTAM ID line
+    const idMatch=trimmed.match(NOTAM_ID_LINE);
+    if(idMatch){
+      const jeppStar=idMatch[1]==='*';
+      const notamId=idMatch[2];
+      const notamDate=idMatch[3];
+
+      // Determine if company notam (UALxxxxx)
+      const isCompany=/^UAL/i.test(notamId);
+
+      // Collect body lines (until next blank line or next NOTAM ID)
+      i++;
+      const bodyLines=[];
+      while(i<lines.length){
+        const bl=lines[i].trimEnd();
+        const bt=bl.trim();
+        if(!bt) break; // blank line ends this notam
+        if(bt.match(NOTAM_ID_LINE)) break; // next notam starts
+        if(bt.match(AP_HDR)) break;
+        if(bt.match(/^KZ[A-Z]{2}\s*\//)) break;
+        bodyLines.push(bt);
+        i++;
+      }
+
+      const bodyText=bodyLines.join('\n');
+      const fullText=notamId+' ('+notamDate+')\n'+bodyText;
+      const oneline=(notamId+' '+bodyText).replace(/\s+/g,' ').trim();
+
+      const cat=isCompany?'COMPANY':classify(oneline);
+      const sev=severity(cat,oneline,jeppStar);
+
+      notams.push({
+        id:notamId,
+        date:notamDate,
+        airport:currentAirport,
+        section:isCompany?'COMPANY':currentSection,
+        cat,sev,
+        jeppStar,
+        isCompany,
+        full:fullText,
+        oneline
+      });
+      continue;
+    }
+
+    i++;
+  }
+  return notams;
 }
 
 function isDark(){return window.matchMedia&&window.matchMedia('(prefers-color-scheme:dark)').matches}
 function cc(cat){const c=CATS[cat],d=isDark();return{col:d?c.col:c.lcol,bg:d?c.bg:c.lbg}}
-function sc(sev){return(isDark()?['#f85149','#e3882a','#388bfd','#3fb950','#6e7681']:['#cf222e','#bc4c00','#0550ae','#1a7f37','#6e7781'])[Math.min(sev-1,4)]}
-function sl(sev){return sev<=2?'CRIT':sev===3?'NOTE':'INFO'}
+function sc(sev,jeppStar){
+  if(jeppStar) return isDark()?'#f85149':'#cf222e';
+  return(isDark()?['#f85149','#e3882a','#388bfd','#3fb950','#888780','#888780']:
+                  ['#cf222e','#bc4c00','#0550ae','#1a7f37','#6e7781','#6e7781'])[Math.min(sev-1,5)];
+}
+function sl(sev,jeppStar){
+  if(jeppStar) return '★';
+  return sev<=2?'CRIT':sev===3?'NOTE':'INFO';
+}
 
 let notams=[],activeCats=new Set(Object.keys(CATS));
 
@@ -276,41 +354,70 @@ function render(){
   let arr=[...notams];
   const q=document.getElementById('search').value.toLowerCase();
   const apf=document.getElementById('airport-filter').value;
+  const sf=document.getElementById('section-filter').value;
   const sb=document.getElementById('sort').value;
-  if(q)arr=arr.filter(n=>n.oneline.toLowerCase().includes(q));
-  if(apf)arr=arr.filter(n=>n.airport===apf);
+
+  if(q) arr=arr.filter(n=>n.oneline.toLowerCase().includes(q));
+  if(apf) arr=arr.filter(n=>n.airport===apf);
+  if(sf) arr=arr.filter(n=>n.section===sf);
   arr=arr.filter(n=>activeCats.has(n.cat));
-  if(sb==='sev')arr.sort((a,b)=>a.sev-b.sev||a.airport.localeCompare(b.airport));
-  else if(sb==='date')arr.sort((a,b)=>a.period.localeCompare(b.period));
-  else if(sb==='airport')arr.sort((a,b)=>a.airport.localeCompare(b.airport)||a.sev-b.sev);
+
+  if(sb==='sev') arr.sort((a,b)=>a.sev-b.sev||a.airport.localeCompare(b.airport));
+  else if(sb==='jepp') arr.sort((a,b)=>(b.jeppStar?1:0)-(a.jeppStar?1:0)||a.sev-b.sev||a.airport.localeCompare(b.airport));
+  else if(sb==='date') arr.sort((a,b)=>a.date.localeCompare(b.date));
   else arr.sort((a,b)=>a.cat.localeCompare(b.cat)||a.sev-b.sev);
-  document.getElementById('stats').textContent=`Showing ${arr.length} of ${notams.filter(n=>activeCats.has(n.cat)).length} NOTAMs`;
+
+  const filtered=notams.filter(n=>activeCats.has(n.cat));
+  document.getElementById('stats').textContent=`Showing ${arr.length} of ${filtered.length} NOTAMs  •  ${notams.filter(n=>n.jeppStar).length} Jepp-flagged`;
   document.getElementById('hdr-count').textContent=`${notams.length} NOTAMs`;
-  const groups={};
-  for(const n of arr){if(!groups[n.airport])groups[n.airport]=[];groups[n.airport].push(n)}
-  let html='';
-  for(const ap of Object.keys(groups).sort()){
-    const rows=groups[ap];
-    html+=`<div class="airport-group"><div class="airport-hdr"><span class="ap-code">${ap}</span><span class="ap-count">${rows.length} notam${rows.length!==1?'s':''}</span></div>`;
-    for(const n of rows){
-      const{col,bg}=cc(n.cat);
-      const pd=n.period?n.period.slice(0,6)+' → '+n.period.slice(11):'';
-      html+=`<div class="notam-row">
-        <div class="sev-bar" style="background:${sc(n.sev)}"><span class="sev-label">${sl(n.sev)}</span></div>
-        <div class="notam-inner">
-          <div class="notam-meta">
-            ${n.id?`<span class="notam-id">${n.id}</span>`:''}
-            <span class="cat-badge" style="background:${bg};color:${col};border:1px solid ${col}40">${CATS[n.cat].label}</span>
-            ${pd?`<span class="period">${pd}</span>`:''}
-          </div>
-          <div class="notam-text">${highlight(n.full)}</div>
-          <div class="raw-tag">● full unmodified NOTAM text</div>
-        </div>
-      </div>`;
-    }
-    html+='</div>';
+
+  // Group by section then airport
+  const sections={AERODROME:[],ENROUTE:[],COMPANY:[]};
+  for(const n of arr){
+    const s=n.section==='COMPANY'?'COMPANY':n.section;
+    if(!sections[s]) sections[s]=[];
+    sections[s].push(n);
   }
-  if(!html)html=`<div class="empty">${notams.length===0?'Tap <strong>+ Load NOTAMs</strong> above<br>paste your text<br>then tap <strong>Load NOTAMs</strong>':'No NOTAMs match current filters.'}</div>`;
+
+  const SECTION_LABELS={AERODROME:'Aerodrome',ENROUTE:'Enroute',COMPANY:'Company / Ops'};
+  let html='';
+
+  for(const [sec,secNotams] of Object.entries(sections)){
+    if(!secNotams.length) continue;
+    html+=`<div class="section-hdr">${SECTION_LABELS[sec]} — ${secNotams.length} NOTAM${secNotams.length!==1?'s':''}</div>`;
+
+    // Group by airport within section
+    const groups={};
+    for(const n of secNotams){
+      if(!groups[n.airport]) groups[n.airport]=[];
+      groups[n.airport].push(n);
+    }
+
+    for(const ap of Object.keys(groups).sort()){
+      const rows=groups[ap];
+      html+=`<div class="airport-group"><div class="airport-hdr"><span class="ap-code">${ap}</span><span class="ap-count">${rows.length} notam${rows.length!==1?'s':''}</span></div>`;
+      for(const n of rows){
+        const{col,bg}=cc(n.cat);
+        html+=`<div class="notam-row${n.jeppStar?' jepp-flagged':''}">
+          <div class="sev-bar" style="background:${sc(n.sev,n.jeppStar)}"><span class="sev-label">${sl(n.sev,n.jeppStar)}</span></div>
+          <div class="notam-inner">
+            <div class="notam-meta">
+              <span class="notam-id">${n.id}</span>
+              <span class="notam-date">${n.date}</span>
+              ${n.jeppStar?`<span class="jepp-star">★ Jepp flagged</span>`:''}
+              ${n.isCompany?`<span class="company-badge">Company</span>`:''}
+              <span class="cat-badge" style="background:${bg};color:${col};border:1px solid ${col}40">${CATS[n.cat].label}</span>
+            </div>
+            <div class="notam-text">${highlight(n.full)}</div>
+            <div class="raw-tag">● full unmodified NOTAM text</div>
+          </div>
+        </div>`;
+      }
+      html+='</div>';
+    }
+  }
+
+  if(!html) html=`<div class="empty">${notams.length===0?'Tap <strong>+ Load NOTAMs</strong> and paste your Jepp FD Pro NOTAM text':'No NOTAMs match current filters.'}</div>`;
   document.getElementById('output').innerHTML=html;
 }
 
@@ -326,6 +433,7 @@ function buildCatBtns(){
     wrap.appendChild(btn);
   }
 }
+
 function buildAirportFilter(){
   const sel=document.getElementById('airport-filter');
   sel.innerHTML='<option value="">All airports</option>';
@@ -339,7 +447,7 @@ function togglePaste(){
   pasteOpen=!pasteOpen;
   document.getElementById('paste-panel').classList.toggle('hidden',!pasteOpen);
   document.getElementById('toggle-btn').textContent=pasteOpen?'▲ Hide':'+ Load NOTAMs';
-  if(pasteOpen)setTimeout(()=>document.getElementById('paste-area').focus(),100);
+  if(pasteOpen) setTimeout(()=>document.getElementById('paste-area').focus(),100);
 }
 function loadNotams(){
   const raw=document.getElementById('paste-area').value.trim();
@@ -354,6 +462,7 @@ function clearPaste(){document.getElementById('paste-area').value='';document.ge
 document.getElementById('search').addEventListener('input',render);
 document.getElementById('sort').addEventListener('change',render);
 document.getElementById('airport-filter').addEventListener('change',render);
+document.getElementById('section-filter').addEventListener('change',render);
 window.matchMedia('(prefers-color-scheme:dark)').addEventListener('change',()=>{buildCatBtns();render()});
 buildCatBtns();render();
 </script>
