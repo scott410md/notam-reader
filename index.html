@@ -350,6 +350,36 @@ function sl(sev,jeppStar){
 
 let notams=[],activeCats=new Set(Object.keys(CATS));
 
+// Categories that sink to bottom unless explicitly filtered for
+const BOTTOM_CATS=new Set(['MISC','COMPANY','AIRSPACE']);
+// Section display order: Aerodrome first, Enroute second, Company last
+const SECTION_ORDER={AERODROME:0,ENROUTE:1,COMPANY:2};
+const SECTION_LABELS={AERODROME:'Aerodrome',ENROUTE:'Enroute',COMPANY:'Company / Ops'};
+
+function sortFn(sb){
+  return function(a,b){
+    // Always sink bottom-cats to end UNLESS user has filtered to only those
+    const aBot=BOTTOM_CATS.has(a.cat)?1:0;
+    const bBot=BOTTOM_CATS.has(b.cat)?1:0;
+    if(aBot!==bBot) return aBot-bBot;
+
+    if(sb==='sev'){
+      // Jepp-starred always first within severity
+      const js=(b.jeppStar?1:0)-(a.jeppStar?1:0);
+      if(js) return js;
+      return a.sev-b.sev||a.airport.localeCompare(b.airport);
+    }
+    if(sb==='jepp'){
+      const js=(b.jeppStar?1:0)-(a.jeppStar?1:0);
+      if(js) return js;
+      return a.sev-b.sev||a.airport.localeCompare(b.airport);
+    }
+    if(sb==='date') return a.date.localeCompare(b.date);
+    if(sb==='cat') return a.cat.localeCompare(b.cat)||a.sev-b.sev;
+    return a.sev-b.sev;
+  };
+}
+
 function render(){
   let arr=[...notams];
   const q=document.getElementById('search').value.toLowerCase();
@@ -362,39 +392,57 @@ function render(){
   if(sf) arr=arr.filter(n=>n.section===sf);
   arr=arr.filter(n=>activeCats.has(n.cat));
 
-  if(sb==='sev') arr.sort((a,b)=>a.sev-b.sev||a.airport.localeCompare(b.airport));
-  else if(sb==='jepp') arr.sort((a,b)=>(b.jeppStar?1:0)-(a.jeppStar?1:0)||a.sev-b.sev||a.airport.localeCompare(b.airport));
-  else if(sb==='date') arr.sort((a,b)=>a.date.localeCompare(b.date));
-  else arr.sort((a,b)=>a.cat.localeCompare(b.cat)||a.sev-b.sev);
+  // If user is specifically looking at bottom-cats only, don't sink them
+  const onlyBottomCats=arr.length>0&&arr.every(n=>BOTTOM_CATS.has(n.cat));
+
+  // Sort the full array
+  arr.sort(sortFn(sb));
 
   const filtered=notams.filter(n=>activeCats.has(n.cat));
   document.getElementById('stats').textContent=`Showing ${arr.length} of ${filtered.length} NOTAMs  •  ${notams.filter(n=>n.jeppStar).length} Jepp-flagged`;
   document.getElementById('hdr-count').textContent=`${notams.length} NOTAMs`;
 
-  // Group by section then airport
+  // Group into sections, preserving the sorted order within each group
   const sections={AERODROME:[],ENROUTE:[],COMPANY:[]};
   for(const n of arr){
-    const s=n.section==='COMPANY'?'COMPANY':n.section;
+    const s=n.section||'AERODROME';
     if(!sections[s]) sections[s]=[];
     sections[s].push(n);
   }
 
-  const SECTION_LABELS={AERODROME:'Aerodrome',ENROUTE:'Enroute',COMPANY:'Company / Ops'};
+  // Within each airport sub-group, sort by the chosen sort but keep airport grouping
+  // Build airport groups preserving overall sort order
   let html='';
+  const sectionKeys=Object.keys(sections).sort((a,b)=>SECTION_ORDER[a]-SECTION_ORDER[b]);
 
-  for(const [sec,secNotams] of Object.entries(sections)){
+  for(const sec of sectionKeys){
+    const secNotams=sections[sec];
     if(!secNotams.length) continue;
     html+=`<div class="section-hdr">${SECTION_LABELS[sec]} — ${secNotams.length} NOTAM${secNotams.length!==1?'s':''}</div>`;
 
-    // Group by airport within section
+    // Build airport groups in the order airports first appear in the sorted array
+    const apOrder=[];
     const groups={};
     for(const n of secNotams){
-      if(!groups[n.airport]) groups[n.airport]=[];
+      if(!groups[n.airport]){groups[n.airport]=[];apOrder.push(n.airport)}
       groups[n.airport].push(n);
     }
+    // Sort airports: for severity/jepp sort, order airports by their worst NOTAM
+    // For date/cat sort, keep insertion order (which is already sorted)
+    if(sb==='sev'||sb==='jepp'){
+      apOrder.sort((a,b)=>{
+        const aSev=Math.min(...groups[a].map(n=>n.sev));
+        const bSev=Math.min(...groups[b].map(n=>n.sev));
+        const aJepp=groups[a].some(n=>n.jeppStar)?1:0;
+        const bJepp=groups[b].some(n=>n.jeppStar)?1:0;
+        return (bJepp-aJepp)||aSev-bSev||a.localeCompare(b);
+      });
+    }
 
-    for(const ap of Object.keys(groups).sort()){
+    for(const ap of apOrder){
       const rows=groups[ap];
+      // Sort rows within airport group
+      rows.sort(sortFn(sb));
       html+=`<div class="airport-group"><div class="airport-hdr"><span class="ap-code">${ap}</span><span class="ap-count">${rows.length} notam${rows.length!==1?'s':''}</span></div>`;
       for(const n of rows){
         const{col,bg}=cc(n.cat);
